@@ -26,7 +26,7 @@ var client = new Mockaroo.Client({
 client.generate({
     count: 10,
     schema: 'My Saved Schema'
-}).then(records) {
+}).then(function(records) {
     ...
 });
 ```
@@ -44,8 +44,8 @@ client.generate({
         type: 'Custom List',
         values: ['credit', 'debit']
     }]
-}.then(records) {
-    ...
+}).then(function(records) {
+    // handle response
 });
 ```
 
@@ -67,7 +67,7 @@ client.generate({
         type: 'Custom List',
         values: ['credit', 'debit']
     }]
-}.then(records) {
+}).then(function(records) {
     for (var i=0; i<records.length; i++) {
         var record = records[i];
         console.log('record ' + i, 'id:' + record.id + ', transactionType:' + record.transactionType);
@@ -83,9 +83,9 @@ This module contains Error classes to help you handle specific error conditions.
 client.generate({
     count: 10,
     schema: 'My Saved Schema'
-}).then(records) {
-    ...
-}).catch(error) {
+}).then(function(records) {
+    // handle successful response here
+}).catch(function(error) {
     if (error instanceof Mockaroo.errors.InvalidApiKeyError) {
       console.log('invalid api key');
     } else if (error instanceof Mockaroo.errors.UsageLimitExceededError) {
