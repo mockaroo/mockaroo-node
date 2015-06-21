@@ -1,0 +1,23 @@
+{
+  "name": "mockaroo-node",
+  "version": "0.1.0",
+  "description": "Generate data using the mockaroo.com API",
+  "main": "lib/mockaroo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark Brocato",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.5.4",
+    "core-js": "^0.9.13"
+  },
+  "devDependencies": {
+    "esdoc": "^0.1.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-jsdoc": "^0.1.4",
+    "gulp-run": "^1.6.8",
+    "gulp-util": "^3.0.5"
+  }
+}
