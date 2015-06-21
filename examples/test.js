@@ -1,10 +1,11 @@
 var Mockaroo = require('../lib/mockaroo');
 
 var client = new Mockaroo.Client({
-    host: 'localhost',
-    port: 3000,
-    secure: false,
-    apiKey: 'e93db400'
+    // host: 'localhost',
+    // port: 3000,
+    // secure: false,
+    // apiKey: 'e93db400'
+    apiKey: '9a9987b0'
 });
 
 client.generate({
