@@ -49,7 +49,7 @@ client.generate({
 });
 ```
 
-Field types and parameters are documented [here](http://mockaroo.com/api/docs)
+Field types and parameters are documented [here](http://mockaroo.com/api/docs#types)
 
 # Handling Responses
 
