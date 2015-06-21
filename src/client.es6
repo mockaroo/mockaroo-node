@@ -18,11 +18,11 @@ export default class Client {
     constructor(options) {
         var defaults = {
             host: 'mockaroo.com',
-            port: 80,
             secure: true
         };
 
         Object.assign(this, defaults, options);
+
         this.validate();
     }
 
@@ -68,17 +68,20 @@ export default class Client {
      * @param {int} [options.count=1] The number of records to generate. See usage limits here: http://mockaroo.com/api/docs
      * @param {string} options.schema The name of the saved schema. Use this this to generate data based on schema you've built using the website.  Use the fields array to generate data using an ad-doc schema.
      * @param {Object[]} options.fields An array of fields
-     * @param {string} options.fields.type The type of field. Many field types such as "Number" and "Custom List" take additional parameters, which are documented here: http://mockaroo.com/api/docs#types. 
+     * @param {string} options.fields.type The type of field. Many field types such as "Number" and "Custom List" take additional parameters, which are documented here: http://mockaroo.com/api/docs#types.
      * @param {string} options.field.name The value will be returned under this key in the resulting data objects.
      * @return {Promise<Object[]>} The promise resolves to an object if count == 1 or array of objects if count > 1.  Each object represents a record. Keys are the field names.
      */
     generate(options) {
         if (!options || (!options.schema && !options.fields)) throw 'Either fields or schema option must be specified';
 
-        options = Object.assign({ count: 1 }, options);
+        options = Object.assign({ count: 1,  }, options);
 
         var protocol = this.secure ? 'https' : 'http';
-        var url = `${protocol}://${this.host}:${this.port}/api/generate.json?key=${encodeURIComponent(this.apiKey)}&count=${options.count}`;
+        var port = this.port ? `:${this.port}` : '';
+        var url = `${protocol}://${this.host}${port}/api/generate.json?key=${encodeURIComponent(this.apiKey)}&count=${options.count}`;
+
+        console.log('url', url);
 
         return new Promise((resolve, reject) => {
             axios.post(url, JSON.stringify(options.fields))
@@ -92,6 +95,7 @@ export default class Client {
      * @private
      */
     convertError(response) {
+        console.log(response);
         var error = response.data.error;
 
         if (error == 'Invalid API Key') {
