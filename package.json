@@ -1,13 +1,15 @@
 {
-  "name": "mockaroo-node",
+  "name": "mockaroo",
   "version": "0.1.0",
   "description": "Generate data using the mockaroo.com API",
   "main": "lib/mockaroo.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Mark Brocato",
   "license": "MIT",
+  "homepage": "https://github.com/mockaroo/mockaroo-node",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:mockaroo/mockaroo-node.git"
+  },
   "dependencies": {
     "axios": "^0.5.4",
     "core-js": "^0.9.13"
