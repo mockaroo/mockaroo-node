@@ -1,6 +1,6 @@
 {
   "name": "mockaroo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Generate data using the mockaroo.com API",
   "main": "lib/mockaroo.js",
   "author": "Mark Brocato",
