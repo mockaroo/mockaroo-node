@@ -8,7 +8,7 @@ A nodejs client for generating data using the rest api from http://mockaroo.com
 
 # Documentation
 
-http://mockaroo.com/api/node
+http://mockaroo.com/api/node/index.html
 
 # API Overview
 
