@@ -15,11 +15,14 @@
     "core-js": "^0.9.13"
   },
   "devDependencies": {
+    "chai": "^3.0.0",
     "esdoc": "^0.1.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-jsdoc": "^0.1.4",
     "gulp-run": "^1.6.8",
-    "gulp-util": "^3.0.5"
+    "gulp-util": "^3.0.5",
+    "mocha": "^2.2.5",
+    "nock": "^2.6.0"
   }
 }

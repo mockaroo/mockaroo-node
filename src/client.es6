@@ -73,21 +73,47 @@ export default class Client {
      * @return {Promise<Object[]>} The promise resolves to an object if count == 1 or array of objects if count > 1.  Each object represents a record. Keys are the field names.
      */
     generate(options) {
-        if (!options || (!options.schema && !options.fields)) throw 'Either fields or schema option must be specified';
+        if (!options || (!options.schema && !options.fields)) throw new Error('Either fields or schema option must be specified');
 
-        options = Object.assign({ count: 1,  }, options);
+        this.validateFields(options.fields);
 
-        var protocol = this.secure ? 'https' : 'http';
-        var port = this.port ? `:${this.port}` : '';
-        var url = `${protocol}://${this.host}${port}/api/generate.json?key=${encodeURIComponent(this.apiKey)}&count=${options.count}`;
-
-        console.log('url', url);
+        var url = this.getUrl(options);
 
         return new Promise((resolve, reject) => {
-            axios.post(url, JSON.stringify(options.fields))
+            axios.post(url, options.fields ? JSON.stringify(options.fields) : null)
                 .then(resp => resolve(resp.data))
                 .catch(resp => reject(this.convertError(resp)))
         });
+    }
+
+    /**
+     * @private
+     * @param {Object[]} fields
+     */
+    validateFields(fields) {
+        if (!fields) return;
+
+        if (fields instanceof Array) {
+            for (var field of fields) {
+                if (!field.name) throw new Error('each field must have a name');
+                if (!field.type) throw new Error('each field must have a type');
+            }
+        } else {
+            throw new Error('fields must be an array');
+        }
+    }
+
+    /**
+     * Generates the rest api url
+     * @private
+     * @return {String}
+     */
+    getUrl(options) {
+        options = Object.assign({ count: 1 }, options);
+        var protocol = this.secure ? 'https' : 'http';
+        var port = this.port ? `:${this.port}` : '';
+        var schema = options.schema ? `&schema=${options.schema}` : '';
+        return `${protocol}://${this.host}${port}/api/generate.json?key=${encodeURIComponent(this.apiKey)}&count=${options.count}${schema}`;
     }
 
     /**
@@ -95,7 +121,6 @@ export default class Client {
      * @private
      */
     convertError(response) {
-        console.log(response);
         var error = response.data.error;
 
         if (error == 'Invalid API Key') {
@@ -112,6 +137,6 @@ export default class Client {
      * @private
      */
     validate() {
-        if (!this.apiKey) throw 'apiKey is required';
+        if (!this.apiKey) throw new Error('apiKey is required');
     }
 }
