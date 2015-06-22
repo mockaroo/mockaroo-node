@@ -101,3 +101,10 @@ client.generate({
 To generate documentation and compile the es6 code to js, use the default gulp task:
 
     gulp
+
+# Tests
+
+This module uses mocha and chai for testing. To run tests:
+
+    npm test
+    
