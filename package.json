@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git://github.com:mockaroo/mockaroo-node.git"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "axios": "^0.5.4",
     "core-js": "^0.9.13"
