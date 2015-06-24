@@ -113,7 +113,7 @@ export default class Client {
         var protocol = this.secure ? 'https' : 'http';
         var port = this.port ? `:${this.port}` : '';
         var schema = options.schema ? `&schema=${options.schema}` : '';
-        return `${protocol}://${this.host}${port}/api/generate.json?key=${encodeURIComponent(this.apiKey)}&count=${options.count}${schema}`;
+        return `${protocol}://${this.host}${port}/api/generate.json?client=node&key=${encodeURIComponent(this.apiKey)}&count=${options.count}${schema}`;
     }
 
     /**
