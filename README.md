@@ -51,6 +51,19 @@ client.generate({
 
 Field types and parameters are documented [here](http://mockaroo.com/api/docs#types)
 
+You can also download data in csv format:
+
+```js
+client.generate({
+    count: 10,
+    format: 'csv',
+    header: true, // this is the default, set to false to remove the header row
+    fields: [...]
+}).then(function(records) {
+    // handle response
+});
+```
+
 # Handling Responses
 
 The Promise returned by client.generate resolves to an array of records when count > 1 and a single object when count == 1.
@@ -107,4 +120,3 @@ To generate documentation and compile the es6 code to js, use the default gulp t
 This module uses mocha and chai for testing. To run tests:
 
     npm test
-    

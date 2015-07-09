@@ -31,7 +31,7 @@ describe('Client', function() {
                 apiKey: 'xxx'
             });
 
-            client.getUrl().should.equal('https://mockaroo.com/api/generate.json?key=xxx&count=1')
+            client.getUrl().should.equal('https://mockaroo.com/api/generate.json?client=node&key=xxx&count=1')
         });
 
         it('should allow you to change the port', function() {
@@ -41,7 +41,7 @@ describe('Client', function() {
                 port: 3000
             });
 
-            client.getUrl().should.equal('http://mockaroo.com:3000/api/generate.json?key=xxx&count=1');
+            client.getUrl().should.equal('http://mockaroo.com:3000/api/generate.json?client=node&key=xxx&count=1');
         });
 
         it('should use http when secure:false', function() {
@@ -50,7 +50,7 @@ describe('Client', function() {
                 secure: false
             });
 
-            client.getUrl().should.equal('http://mockaroo.com/api/generate.json?key=xxx&count=1');
+            client.getUrl().should.equal('http://mockaroo.com/api/generate.json?client=node&key=xxx&count=1');
         });
 
         it('should allow you to set a count > 1', function() {
@@ -58,7 +58,7 @@ describe('Client', function() {
                 apiKey: 'xxx',
             });
 
-            client.getUrl({count: 10}).should.equal('https://mockaroo.com/api/generate.json?key=xxx&count=10');
+            client.getUrl({count: 10}).should.equal('https://mockaroo.com/api/generate.json?client=node&key=xxx&count=10');
         });
 
         it('should allow you to customize the host', function() {
@@ -67,7 +67,7 @@ describe('Client', function() {
                 host: 'foo'
             });
 
-            client.getUrl().should.equal('https://foo/api/generate.json?key=xxx&count=1');
+            client.getUrl().should.equal('https://foo/api/generate.json?client=node&key=xxx&count=1');
         });
 
         it('should include schema', function() {
@@ -75,8 +75,24 @@ describe('Client', function() {
                 apiKey: 'xxx'
             });
 
-            client.getUrl({schema: 'MySchema'}).should.equal('https://mockaroo.com/api/generate.json?key=xxx&count=1&schema=MySchema');
+            client.getUrl({schema: 'MySchema'}).should.equal('https://mockaroo.com/api/generate.json?client=node&key=xxx&count=1&schema=MySchema');
         });
+
+        it('should allow you to generate csv', function() {
+            var client = new Mockaroo.Client({
+                apiKey: 'xxx'
+            });
+
+            client.getUrl({format: 'csv'}).should.equal('https://mockaroo.com/api/generate.csv?client=node&key=xxx&count=1');
+        });
+
+        it('should allow you to remove the header from csv', function() {
+            var client = new Mockaroo.Client({
+                apiKey: 'xxx'
+            });
+
+            client.getUrl({format: 'csv', header: false}).should.equal('https://mockaroo.com/api/generate.csv?client=node&key=xxx&count=1&header=false');
+        })
     });
 
     describe('generate', function() {
@@ -93,7 +109,7 @@ describe('Client', function() {
 
         describe('when successful', function() {
             var api = nock('http://mockaroo.com')
-                .post('/api/generate.json?key=xxx&count=1')
+                .post('/api/generate.json?client=node&key=xxx&count=1')
                 .reply(200, JSON.stringify([{ foo: 'bar' }]))
 
             it('should resolve', function() {
@@ -111,7 +127,7 @@ describe('Client', function() {
 
         describe('when unsuccessful', function() {
             var api = nock('http://mockaroo.com')
-                .post('/api/generate.json?key=xxx&count=1')
+                .post('/api/generate.json?client=node&key=xxx&count=1')
                 .reply(500, JSON.stringify({ error: 'Invalid API Key' }))
 
             it('should handle errors', function() {
