@@ -82,7 +82,7 @@ export default class Client {
         var url = this.getUrl(options);
 
         return new Promise((resolve, reject) => {
-            axios.post(url, options.fields ? JSON.stringify(options.fields) : null)
+            axios.post(url, options.fields)
                 .then(resp => resolve(resp.data))
                 .catch(resp => reject(this.convertError(resp)))
         });
