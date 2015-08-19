@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "axios": "^0.5.4",
-    "core-js": "^0.9.13"
+    "core-js": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
-    "esdoc": "^0.1.2",
+    "esdoc": "^0.2.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-jsdoc": "^0.1.4",
