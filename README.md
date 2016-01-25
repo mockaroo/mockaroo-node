@@ -103,8 +103,10 @@ client.generate({
       console.log('invalid api key');
     } else if (error instanceof Mockaroo.errors.UsageLimitExceededError) {
       console.log('usage limit exceeded');
+    } else if (error instanceof Mockaroo.errors.ApiError) {
+      console.log('api error: ' + error.message);
     } else {
-      console.log('unknown error', error);
+      console.log('unknown error: ' + error);
     }
 });
 ```

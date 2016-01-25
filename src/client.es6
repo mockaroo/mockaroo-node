@@ -129,10 +129,10 @@ export default class Client {
 
         if (error == 'Invalid API Key') {
             return new errors.InvalidApiKeyError(response.error);
-        } else if (error =~ /limited/) {
+        } else if (error.match(/limited/)) {
             return new errors.UsageLimitExceededError(response.error);
         } else {
-            return error;
+            return new errors.ApiError(error);
         }
     }
 
