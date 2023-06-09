@@ -2,3 +2,8 @@ node_modules
 esdoc
 examples
 .idea
+/dist
+# Edgio generated build directory
+.edgio
+.DS_Store
+/docs

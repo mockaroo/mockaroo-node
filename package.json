@@ -1,8 +1,8 @@
 {
   "name": "mockaroo",
-  "version": "0.1.7",
+  "version": "1.0.0",
   "description": "Generate data using the mockaroo.com API",
-  "main": "lib/mockaroo.js",
+  "main": "index.js",
   "author": "Mark Brocato",
   "license": "MIT",
   "homepage": "https://github.com/mockaroo/mockaroo-node",
@@ -11,20 +11,23 @@
     "url": "git://github.com:mockaroo/mockaroo-node.git"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "docs": "esdoc -c esdoc.json",
+    "build": "esbuild src/* --platform=node --target=node18 --outdir=dist --format=cjs && cp package.json dist/package.json",
+    "deploy": "edgio deploy --environment=production",
+    "publish-to-npm": "cd dist && npm publish --access public",
+    "release": "yarn build && yarn docs && yarn publish-to-npm && yarn deploy"
   },
   "dependencies": {
-    "axios": "^0.5.4",
-    "core-js": "^0.9.13"
+    "axios": "^0.5.4"
   },
   "devDependencies": {
+    "@edgio/cli": "^7.0.17",
+    "@edgio/core": "^7.0.17",
     "chai": "^3.0.0",
-    "esdoc": "^0.1.2",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
-    "gulp-jsdoc": "^0.1.4",
-    "gulp-run": "^1.6.8",
-    "gulp-util": "^3.0.5",
+    "esbuild": "^0.17.19",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "mocha": "^2.2.5",
     "nock": "^2.6.0"
   }
