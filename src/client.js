@@ -1,4 +1,4 @@
-import "core-js/shim";
+// import "core-js/shim";
 import axios from "axios";
 import * as errors from "./errors";
 
