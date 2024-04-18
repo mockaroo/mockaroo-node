@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Generate data using the mockaroo.com API",
   "main": "index.js",
+  "type": "module",
   "author": "Mark Brocato",
   "license": "MIT",
   "homepage": "https://github.com/mockaroo/mockaroo-node",
@@ -18,17 +19,27 @@
     "publish-to-npm": "cd dist && npm publish --access public",
     "release": "yarn build && yarn docs && yarn publish-to-npm && yarn deploy"
   },
+  "targets": {
+    "default": {
+      "distDir": "dist"
+    }
+  },
   "dependencies": {
-    "axios": "^0.5.4"
+    "axios": "1.6.8"
   },
   "devDependencies": {
-    "@edgio/cli": "^7.0.17",
-    "@edgio/core": "^7.0.17",
-    "chai": "^3.0.0",
-    "esbuild": "^0.17.19",
-    "esdoc": "^1.1.0",
-    "esdoc-standard-plugin": "^1.0.0",
-    "mocha": "^2.2.5",
-    "nock": "^2.6.0"
+    "@edgio/cli": "7.11.3",
+    "@edgio/core": "7.11.3",
+    "chai": "5.1.0",
+    "esbuild": "0.20.2",
+    "esdoc": "1.1.0",
+    "esdoc-standard-plugin": "1.0.0",
+    "eslint": "8.0.1",
+    "eslint-config-standard": "17.1.0",
+    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-n": "15.0.0 || 16.0.0 ",
+    "eslint-plugin-promise": "6.0.0",
+    "mocha": "10.4.0",
+    "nock": "13.5.4"
   }
 }

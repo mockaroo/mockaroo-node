@@ -1,98 +1,105 @@
-let nock = require("nock");
-let Mockaroo = require("mockaroo").default;
-require("chai").should();
+import axios from "axios";
+import nock from "nock";
+import Mockaroo from "mockaroo";
+import("chai").then((chai) => {
+  chai.should();
+});
+
+axios.defaults.adatper = "axios/lib/adapters/http";
 
 describe("Client", function () {
   describe("constructor", function () {
     it("should require an api key", function () {
-      (function () {
+      try {
+        // eslint-disable-next-line no-new
         new Mockaroo.Client({});
-      }).should.throw("apiKey is required");
+      } catch (error) {
+        error.message.should.equal("apiKey is required");
+      }
     });
   });
 
   describe("convertError", function () {
-    let client;
+    const client = new Mockaroo.Client({
+      apiKey: "xxx"
+    });
+    describe("convertError", function () {
+      it("should convert Invalid API Key to InvalidApiKeyError", function () {
+        client.convertError({ data: { error: "Invalid API Key" } }).should.be.a.instanceOf(Mockaroo.errors.InvalidApiKeyError);
+      });
 
-    beforeEach(() => {
-      client = new Mockaroo.Client({
-        apiKey: "xxx",
+      it("should convert errors containing \"limited\" to UsageLimitExceededError", function () {
+        client.convertError({ data: { error: "Silver plans are limited to 1,000,000 records per day." } }).should.be.a.instanceOf(Mockaroo.errors.UsageLimitExceededError);
       });
     });
 
-    it("should convert Invalid API Key to InvalidApiKeyError", function () {
-      client
-        .convertError({ data: { error: "Invalid API Key" } })
-        .should.be.a.instanceOf(Mockaroo.errors.InvalidApiKeyError);
-    });
-
-    it('should convert errors containing "limited" to UsageLimitExceededError', function () {
+    it("should convert errors containing \"limited\" to UsageLimitExceededError", function () {
       client
         .convertError({
           data: {
-            error: "Silver plans are limited to 1,000,000 records per day.",
-          },
+            error: "Silver plans are limited to 1,000,000 records per day."
+          }
         })
         .should.be.a.instanceOf(Mockaroo.errors.UsageLimitExceededError);
     });
   });
 
   describe("getUrl", function () {
-    it("should default to https://mockaroo.com", function () {
-      let client = new Mockaroo.Client({
-        apiKey: "xxx",
+    it("should default to https://api.mockaroo.com", function () {
+      const client = new Mockaroo.Client({
+        apiKey: "xxx"
       });
 
       client
         .getUrl()
         .should.equal(
-          "https://mockaroo.com/api/generate.json?client=node&key=xxx&count=1"
+          "https://api.mockaroo.com/api/generate.json?client=node&key=xxx&count=1"
         );
     });
 
     it("should allow you to change the port", function () {
-      let client = new Mockaroo.Client({
+      const client = new Mockaroo.Client({
         apiKey: "xxx",
         secure: false,
-        port: 3000,
+        port: 3000
       });
 
       client
         .getUrl()
         .should.equal(
-          "http://mockaroo.com:3000/api/generate.json?client=node&key=xxx&count=1"
+          "http://api.mockaroo.com:3000/api/generate.json?client=node&key=xxx&count=1"
         );
     });
 
     it("should use http when secure:false", function () {
-      let client = new Mockaroo.Client({
+      const client = new Mockaroo.Client({
         apiKey: "xxx",
-        secure: false,
+        secure: false
       });
 
       client
         .getUrl()
         .should.equal(
-          "http://mockaroo.com/api/generate.json?client=node&key=xxx&count=1"
+          "http://api.mockaroo.com/api/generate.json?client=node&key=xxx&count=1"
         );
     });
 
     it("should allow you to set a count > 1", function () {
-      let client = new Mockaroo.Client({
-        apiKey: "xxx",
+      const client = new Mockaroo.Client({
+        apiKey: "xxx"
       });
 
       client
         .getUrl({ count: 10 })
         .should.equal(
-          "https://mockaroo.com/api/generate.json?client=node&key=xxx&count=10"
+          "https://api.mockaroo.com/api/generate.json?client=node&key=xxx&count=10"
         );
     });
 
     it("should allow you to customize the host", function () {
-      let client = new Mockaroo.Client({
+      const client = new Mockaroo.Client({
         apiKey: "xxx",
-        host: "foo",
+        host: "foo"
       });
 
       client
@@ -103,50 +110,50 @@ describe("Client", function () {
     });
 
     it("should include schema", function () {
-      let client = new Mockaroo.Client({
-        apiKey: "xxx",
+      const client = new Mockaroo.Client({
+        apiKey: "xxx"
       });
 
       client
         .getUrl({ schema: "MySchema" })
         .should.equal(
-          "https://mockaroo.com/api/generate.json?client=node&key=xxx&count=1&schema=MySchema"
+          "https://api.mockaroo.com/api/generate.json?client=node&key=xxx&count=1&schema=MySchema"
         );
     });
 
     it("should allow you to generate csv", function () {
-      let client = new Mockaroo.Client({
-        apiKey: "xxx",
+      const client = new Mockaroo.Client({
+        apiKey: "xxx"
       });
 
       client
         .getUrl({ format: "csv" })
         .should.equal(
-          "https://mockaroo.com/api/generate.csv?client=node&key=xxx&count=1"
+          "https://api.mockaroo.com/api/generate.csv?client=node&key=xxx&count=1"
         );
     });
 
     it("should allow you to remove the header from csv", function () {
-      let client = new Mockaroo.Client({
-        apiKey: "xxx",
+      const client = new Mockaroo.Client({
+        apiKey: "xxx"
       });
 
       client
         .getUrl({ format: "csv", header: false })
         .should.equal(
-          "https://mockaroo.com/api/generate.csv?client=node&key=xxx&count=1&header=false"
+          "https://api.mockaroo.com/api/generate.csv?client=node&key=xxx&count=1&header=false"
         );
     });
   });
 
   describe("generate", function () {
-    let client;
+    const client = new Mockaroo.Client({
+      apiKey: "xxx"
+    });
 
-    beforeEach(() => {
-      client = new Mockaroo.Client({
-        secure: false,
-        apiKey: "xxx",
-      });
+    beforeEach((done) => {
+      done();
+      if (!nock.isActive()) nock.activate();
     });
 
     it("should require fields or schema", function () {
@@ -156,40 +163,54 @@ describe("Client", function () {
     });
 
     describe("when successful", function () {
-      let api = nock("http://mockaroo.com")
-        .post("/api/generate.json?client=node&key=xxx&count=1")
+      nock("http://api.mockaroo.com")
+        .post(/\/api\/generate\.json.*successResponse.*/)
         .reply(200, JSON.stringify([{ foo: "bar" }]));
 
-      it("should resolve", function () {
-        return client
+      const client = new Mockaroo.Client({
+        apiKey: "successResponse",
+        secure: false
+      });
+      it("should resolve", async () => {
+        const response = await client
           .generate({
             fields: [
               {
                 name: "foo",
                 type: "Custom List",
-                values: ["bar"],
-              },
-            ],
-          })
-          .then(function (records) {
-            records.should.deep.equal([{ foo: "bar" }]);
+                values: ["bar"]
+              }
+            ]
           });
+
+        response.should.eql([{ foo: "bar" }]);
       });
     });
 
     describe("when unsuccessful", function () {
-      let api = nock("http://mockaroo.com")
-        .post("/api/generate.json?client=node&key=xxx&count=1")
-        .reply(500, JSON.stringify({ error: "Invalid API Key" }));
+      nock("http://api.mockaroo.com")
+        .post(/\/api\/generate\.json.*rejectedResponse*/)
+        .replyWithError({ status: 500, data: { error: "Internal Server Error" } });
 
-      it("should handle errors", function () {
-        return client
-          .generate({
-            fields: [],
-          })
-          .catch(function (error) {
-            error.should.be.instanceOf(Mockaroo.errors.InvalidApiKeyError);
+      const client = new Mockaroo.Client({
+        secure: false,
+        apiKey: "rejectedResponse"
+      });
+      it("should handle errors", async () => {
+        try {
+          await client.generate({
+            count: 3,
+            fields: [
+              {
+                name: "foo",
+                type: "Custom List",
+                values: ["bar"]
+              }
+            ]
           });
+        } catch (error) {
+          error.should.be.a.instanceOf(Mockaroo.errors.ApiError);
+        }
       });
     });
 
