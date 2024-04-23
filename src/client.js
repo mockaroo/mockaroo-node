@@ -17,7 +17,7 @@ export default class Client {
      */
   constructor (options) {
     const defaults = {
-      host: "mockaroo.com",
+      host: "api.mockaroo.com",
       secure: true,
       port: null,
       apiKey: null
