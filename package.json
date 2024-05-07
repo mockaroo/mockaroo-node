@@ -9,7 +9,7 @@
   "homepage": "https://github.com/mockaroo/mockaroo-node",
   "repository": {
     "type": "git",
-    "url": "git://github.com:mockaroo/mockaroo-node.git"
+    "url": "git://github.com/mockaroo/mockaroo-node.git"
   },
   "scripts": {
     "test": "mocha",
