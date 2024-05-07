@@ -1,10 +1,10 @@
-import * as errors from "./errors";
-import Client from "./client";
-
 /**
  * @module mockaroo
  */
-module.exports = {
+import Client from "./client.js";
+import * as errors from "./errors";
+
+export default {
   errors,
-  Client,
+  Client
 };
