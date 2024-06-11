@@ -4,7 +4,5 @@
 import Client from "./client.js";
 import * as errors from "./errors";
 
-export default {
-  errors,
-  Client
-};
+export { Client };
+export { errors };
