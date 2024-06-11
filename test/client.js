@@ -1,6 +1,6 @@
-import axios from "axios";
-import nock from "nock";
-import Mockaroo from "mockaroo";
+const axios = require("axios");
+const nock = require("nock");
+const Mockaroo = require("mockaroo");
 import("chai").then((chai) => {
   chai.should();
 });
